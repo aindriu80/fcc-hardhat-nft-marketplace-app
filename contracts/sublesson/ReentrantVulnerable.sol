@@ -43,7 +43,11 @@ contract ReentrantVulnerable {
         balances[msg.sender] += msg.value;
     }
 
+    bool locked;
+
     function withdraw() public {
+        require(!locked, "revert");
+        locked = true;
         uint256 bal = balances[msg.sender];
         require(bal > 0);
 
@@ -51,6 +55,7 @@ contract ReentrantVulnerable {
         require(sent, "Failed to send Ether");
 
         balances[msg.sender] = 0;
+        locked = false;
     }
 
     // Helper function to check the balance of this contract
