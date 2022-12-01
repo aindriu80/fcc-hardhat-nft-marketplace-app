@@ -144,6 +144,15 @@ contract NftMarketplace is ReentrancyGuard {
         delete (s_lstings[nftAddress][tokenId]);
         emit ItemCanceled(msg.sender, nftAddres, tokenId);
     }
+
+    function updateListing(
+        address nftAddress,
+        uint256 tokenId,
+        uint256 newPrice
+    ) external isListed(nftAddress, tokenId) isOwner(nftAddress, tokenId, msg.sender) {
+        s_listings[nftAddress][tokenId].price = newPrice;
+        emit ItemListed(msg.sender, nftAddres, tokenId, newPrice);
+    }
 }
 // 1. `listItem`: List NFTs on the marketplace ✔️
 // 2. `buyItem`: Buy the NFTs✔️
