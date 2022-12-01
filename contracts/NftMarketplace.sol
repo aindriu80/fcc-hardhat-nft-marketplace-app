@@ -10,6 +10,8 @@ error NftMarketplace__AlreadyListed(address nftAddress, uint256 tokenId);
 error NftMarketplace__NotOwner();
 error NftMarketplace__NotListed(address nftAddress, uint256 tokenId);
 error NftMarketplace__PriceNotMet(address nftAddress, uint256 tokenId, uint256 price);
+error NFT_MARKETPLACE__NoProceeds();
+error wFT_MARKETPLACE__TransferFailed();
 
 contract NftMarketplace is ReentrancyGuard {
     struct Listing {
@@ -141,8 +143,8 @@ contract NftMarketplace is ReentrancyGuard {
         isOwner(nftAddress, tokenId, msg.sender)
         isListed(nftAddress, tokenId)
     {
-        delete (s_lstings[nftAddress][tokenId]);
-        emit ItemCanceled(msg.sender, nftAddres, tokenId);
+        delete (s_listings[nftAddress][tokenId]);
+        emit ItemCanceled(msg.sender, nftAddress, tokenId);
     }
 
     function updateListing(
@@ -151,11 +153,39 @@ contract NftMarketplace is ReentrancyGuard {
         uint256 newPrice
     ) external isListed(nftAddress, tokenId) isOwner(nftAddress, tokenId, msg.sender) {
         s_listings[nftAddress][tokenId].price = newPrice;
-        emit ItemListed(msg.sender, nftAddres, tokenId, newPrice);
+        emit ItemListed(msg.sender, nftAddress, tokenId, newPrice);
+    }
+
+    function withdrawProceeds() external {
+        uint256 proceeds = s_proceeds[msg.sender];
+        if (proceeds <= 0) {
+            revert NFT_MARKETPLACE__NoProceeds();
+        }
+        s_proceeds[msg.sender] = 0;
+        (bool success, ) = payable(msg.sender).call{value: proceeds}("");
+        if (!success) {
+            revert wFT_MARKETPLACE__TransferFailed();
+        }
+    }
+
+    ///////////////////////
+    /// Getter Function ///
+    ///////////////////////
+
+    function getListing(address nftAddress, uint256 tokenId)
+        external
+        view
+        returns (Listing memory)
+    {
+        return s_listings[nftAddress][tokenId];
+    }
+
+    function getProceeds(address seller) external view returns (uint256) {
+        return s_proceeds[seller];
     }
 }
 // 1. `listItem`: List NFTs on the marketplace ✔️
-// 2. `buyItem`: Buy the NFTs✔️
-// 3. `cancelItem`: Cancel a listing✔️
-// 4. `updateListing`: Update Price
-// 5. `withdrawProceeds`: Withdraw payment for my bought NFTs
+// 2. `buyItem`: Buy the NFTs ✔️
+// 3. `cancelItem`: Cancel a listing ✔️
+// 4. `updateListing`: Update Price ✔️
+// 5. `withdrawProceeds`: Withdraw payment for my bought NFTs ✔️
