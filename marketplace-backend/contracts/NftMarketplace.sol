@@ -37,6 +37,12 @@ contract NftMarketplace is ReentrancyGuard {
 
     // NFT Contract address -> NFT TokenID -> Listing
     mapping(address => mapping(uint256 => Listing)) private s_listings;
+    // Create an array of listing instead?
+    // Get all the NFTs a user owns?
+    // Query some other weird data?
+    // What if an array will be very gas expensiv??
+
+    // We don't want to much change on our protocol for just the website.
 
     // Seller address -> Amount earned
     mapping(address => uint256) private s_proceeds;
