@@ -36,3 +36,8 @@ yarn-error.log*
 next-env.d.ts
 
 /marketplace-nextjs-frontend/node_modules
+/moralis-self-hosted/node_modules
+/moralis-self-hosted/build
+/moralis-self-hosted/logs
+/moralis-self-hosted/.env
+/graph-indexer-frontend/node_modules
