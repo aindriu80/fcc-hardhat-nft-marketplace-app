@@ -36,6 +36,7 @@ yarn-error.log*
 next-env.d.ts
 
 /marketplace-nextjs-frontend/node_modules
+/marketplace-nextjs-frontend/.env
 /moralis-self-hosted/node_modules
 /moralis-self-hosted/build
 /moralis-self-hosted/logs
