@@ -7,7 +7,8 @@
         "build": "next build",
         "start": "next start",
         "lint": "next lint",
-        "moralis:sync": "moralis-admin-cli connect-local-devchain --chain hardhat --moralisSubdomain https://c5ef-93-107-111-17.eu.ngrok.io/ --frpcPath ./frp/frpc"
+        "moralis:sync": "moralis-admin-cli connect-local-devchain --chain hardhat --moralisSubdomain https://c5ef-93-107-111-17.eu.ngrok.io/ --frpcPath ./frp/frpc",
+        "moralis:cloud": "moralis-admin-cli watch-cloud-folder --moralisSubdomain https://c5ef-93-107-111-17.eu.ngrok.io/  --autoSave 1  --moralisCloudFolder ./cloudFunctions"
     },
     "dependencies": {
         "moralis": "^1.5.11",
