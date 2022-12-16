@@ -16,6 +16,10 @@ async function mintAndList() {
   const tx = await nftMarketplace.listItem(basicNft.address, tokenId, PRICE)
   await tx.wait(1)
   console.log("Listed")
+  if (network.config.chainId == 31337) {
+    // Moralis has a hard time if you move mor ethan 1 at a time ;)
+    await moveBlocks(1, (sleepAmount = 1000))
+  }
 }
 
 mintAndList()
