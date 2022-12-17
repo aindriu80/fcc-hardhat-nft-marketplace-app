@@ -1,4 +1,6 @@
-const { ethers } = require("hardhat")
+const { ethers, network } = require("hardhat")
+const { moveBlocks } =require("../utils/move-blocks")
+
 const PRICE = ethers.utils.parseEther("0.1")
 
 async function mintAndList() {
@@ -16,6 +18,7 @@ async function mintAndList() {
   const tx = await nftMarketplace.listItem(basicNft.address, tokenId, PRICE)
   await tx.wait(1)
   console.log("Listed")
+
   if (network.config.chainId == 31337) {
     // Moralis has a hard time if you move mor ethan 1 at a time ;)
     await moveBlocks(1, (sleepAmount = 1000))
