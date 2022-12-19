@@ -1,3 +1,5 @@
+const { ethers } = require("hardhat")
+
 const TOKEN_ID = 0
 const { moveBlocks } = require("../utils/move-blocks")
 
