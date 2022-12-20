@@ -1,19 +1,28 @@
 import styles from "../styles/Home.module.css"
+import { useMoralisQuery } from "react-moralis"
 
 export default function Home() {
-    // How do we  show the recently listed NFT's
-    // we will read from a database that has all the mappings in an
-    // easier to read structure
-
-    // We will index the events off-chain and then read our database.
-    // Setup a server to listen for those events to be fired, and we will add them to a database to query.
-
-    // TheGraph does this in a decentralized way
-    // Moralis does it in a centralized way and comes with a ton of other features.
-
+    const { data: listedNfts, isFetching: fetchingListedNfts } = useMoralisQuery
+    // TableName
+    // Function for the query
+    "ActiveItem", (query) => query.listed(10).descending("tokenId")
+    console.log(listedNFts)
     return (
         <div className={styles.container}>
-            <h2>Dia duit Domhanda!</h2>
+            {fetchingListedNfts ? (
+                <div>Loading...</div>
+            ) : (
+                listedNfts.map((nft) => {
+                    console.log(nft.attributes)
+                    const { price, nftAddress, tokenId, marketplaceAddress, seller } =
+                        nft.attributes
+                    return (
+                        <div>
+                            Price:{price}. NftAddress: {nftAddress}.seller: {seller}
+                        </div>
+                    )
+                })
+            )}
         </div>
     )
 }
