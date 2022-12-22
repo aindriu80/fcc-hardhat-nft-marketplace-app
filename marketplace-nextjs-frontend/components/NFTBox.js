@@ -18,7 +18,18 @@ export default function NFTBox({ price, nftAddress, tokenId, marketplaceAddress,
 
     async function updateUI() {
         const tokenURI = await getTokenURI()
-        console.log(tokenURI)
+        console.log(`The TokenUrl is ${tokenURI}`)
+        if (tokenURI) {
+            // IPFS Gateway: A Server that will return IPFS files from a normal URL.
+            const requestURL = tokenURI.replace("ipfs://", "http://ipfs.io/ipfs/")
+            const tokenURIResponse = await (await fetch(requestURL)).json()
+            const imageURI = tokenURIResponse.image
+            const imageURIURL = imageURI.replace("ipfs://", "https://ipfs.op/opfs/")
+            setImageURI(imageURIURL)
+            // Possible to render image on our server
+            // For Testnets & mainnet => use moralis server hooks
+            // World Adopts ipfs
+        }
         // get the tokenURI
         // usign the image tag from the tokenURI, get the image
     }
@@ -27,4 +38,10 @@ export default function NFTBox({ price, nftAddress, tokenId, marketplaceAddress,
             updateUI()
         }
     }, [isWeb3Enabled])
+
+    return (
+        <div>
+            <div>{imageURI ? <div>Found it!</div> : <img>...</img>}</div>
+        </div>
+    )
 }
