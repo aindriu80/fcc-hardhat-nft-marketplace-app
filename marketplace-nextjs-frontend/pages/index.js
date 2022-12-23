@@ -9,29 +9,31 @@ export default function Home() {
     "ActiveItem", (query) => query.listed(10).descending("tokenId")
     console.log(listedNFts)
     return (
-        <div className={styles.container}>
-            {fetchingListedNfts ? (
-                <div>Loading...</div>
-            ) : (
-                listedNfts.map((nft) => {
-                    console.log(nft.attributes)
-                    const { price, nftAddress, tokenId, marketplaceAddress, seller } =
-                        nft.attributes
-                    return (
-                        <div>
-                            Price:{price}. NftAddress: {nftAddress}.seller: {seller}
-                            <NFTBox
-                                price={price}
-                                nftAddress={nftAddress}
-                                tokenId={tokenId}
-                                marketplaceAddress={marketplaceAddress}
-                                seller={seller}
-                                key={`${nftAddress}${tokenId}`}
-                            />
-                        </div>
-                    )
-                })
-            )}
+        <div className="container mx-auto">
+            <h1 className="px-4 py-4 text-2xl font-bold ">Recently Listed</h1>
+            <div className="flex flex-wrap">
+                {fetchingListedNfts ? (
+                    <div>Loading...</div>
+                ) : (
+                    listedNfts.map((nft) => {
+                        console.log(nft.attributes)
+                        const { price, nftAddress, tokenId, marketplaceAddress, seller } =
+                            nft.attributes
+                        return (
+                            <div>
+                                <NFTBox
+                                    price={price}
+                                    nftAddress={nftAddress}
+                                    tokenId={tokenId}
+                                    marketplaceAddress={marketplaceAddress}
+                                    seller={seller}
+                                    key={`${nftAddress}${tokenId}`}
+                                />
+                            </div>
+                        )
+                    })
+                )}
+            </div>
         </div>
     )
 }

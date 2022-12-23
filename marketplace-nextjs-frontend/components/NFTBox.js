@@ -2,10 +2,15 @@ import { useEffect, useState } from "react"
 import { useWeb3Contract, useMoralis } from "react-moralis"
 import nftMarketplaceAbi from "../constants/NftMarketplace.json"
 import nftAbi from "../constants/BasicNft.json"
+import Image from "next/image"
+import { Card } from "web3uikit"
+import { ethers } from "ethers"
 
 export default function NFTBox({ price, nftAddress, tokenId, marketplaceAddress, seller }) {
     const { isWeb3Enabled } = useMoralis()
     const [imageURI, setImageURI] = useState("")
+    const [tokenName, setTokenName] = useState("")
+    const [tokenDescription, setTokenDescription] = useState("")
 
     const { runContractFunction: getTokenURI } = useWeb3Contract({
         abi: nftAbi,
@@ -26,6 +31,8 @@ export default function NFTBox({ price, nftAddress, tokenId, marketplaceAddress,
             const imageURI = tokenURIResponse.image
             const imageURIURL = imageURI.replace("ipfs://", "https://ipfs.op/opfs/")
             setImageURI(imageURIURL)
+            setTokenName(tokenURIResponse.name)
+            setTokenDescription(tokenURIResponse.description)
             // Possible to render image on our server
             // For Testnets & mainnet => use moralis server hooks
             // World Adopts ipfs
@@ -41,7 +48,28 @@ export default function NFTBox({ price, nftAddress, tokenId, marketplaceAddress,
 
     return (
         <div>
-            <div>{imageURI ? <div>Found it!</div> : <img>...</img>}</div>
+            <div>
+                {imageURI ? (
+                    <Card title={tokenName} description={tokenDescription}>
+                        <div className="p-2">
+                            <div className="flex flex-col items-end gap-2"></div>
+                            <div># {tokenId}</div>
+                            <div className="text-sm italic">Owned by the {seller}</div>
+                            <Image
+                                loader={() => imagURI}
+                                src={imageURI}
+                                height="200"
+                                width="200"
+                            />
+                            <div clasName="font-bold">
+                                {ethers.utils.formatUnits(price, "ether")}ETH
+                            </div>
+                        </div>
+                    </Card>
+                ) : (
+                    <div>Loading...</div>
+                )}
+            </div>
         </div>
     )
 }
