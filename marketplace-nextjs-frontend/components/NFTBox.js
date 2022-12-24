@@ -6,8 +6,23 @@ import Image from "next/image"
 import { Card } from "web3uikit"
 import { ethers } from "ethers"
 
+const truncateSt = (fullStr, strLen) => {
+    if (fullStr.length <= strLen) return fullStr
+
+    const separator = "..."
+    let seperatorLength = seperator.length
+    const charsToShow = strLen - seperatorLength
+    const frontChars = Math.ceil(charsToShow / 2)
+    const backChars = Math.floor(charsToShow / 2)
+    return (
+        fullStr.subString(0, frontChars) +
+        seperator +
+        fullStr.subString(fullStr.length - backChars)
+    )
+}
+
 export default function NFTBox({ price, nftAddress, tokenId, marketplaceAddress, seller }) {
-    const { isWeb3Enabled } = useMoralis()
+    const { isWeb3Enabled, account } = useMoralis()
     const [imageURI, setImageURI] = useState("")
     const [tokenName, setTokenName] = useState("")
     const [tokenDescription, setTokenDescription] = useState("")
@@ -45,6 +60,9 @@ export default function NFTBox({ price, nftAddress, tokenId, marketplaceAddress,
             updateUI()
         }
     }, [isWeb3Enabled])
+
+    const isOwnedByOwner = seller === account || seller === undefined
+    const formattedSellerAddress = isOwnedByUSer ? "you" : truncateStr(seller || "", 15)
 
     return (
         <div>
