@@ -7,7 +7,8 @@
     3. If not, you can buy the listing ✅
 
 2. Sell Page:
-    1. you can list your NFT on the marketplace
+    1. You can list your NFT on the marketplace
+    2. And Withdraw proceeds
 
 Moralis: How do we tell it ot listen to our events?
 
