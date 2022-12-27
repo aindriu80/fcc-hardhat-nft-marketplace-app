@@ -42,3 +42,5 @@ next-env.d.ts
 /moralis-self-hosted/logs
 /moralis-self-hosted/.env
 /graph-indexer-frontend/node_modules
+/marketplace-nft-graph/node_modules
+/marketplace-nft-graph/.env
