@@ -44,3 +44,5 @@ next-env.d.ts
 /graph-indexer-frontend/node_modules
 /marketplace-nft-graph/node_modules
 /marketplace-nft-graph/.env
+/subGraph-nft-marketplace/node_modules
+/subGraph-nft-marketplace/.env

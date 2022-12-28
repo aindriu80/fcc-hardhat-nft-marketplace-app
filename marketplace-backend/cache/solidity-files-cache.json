@@ -2,7 +2,7 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/home/aindriu/Cáipéisí/Programming/projects/FreeCodeCamp/fcc-hardhat-nft-marketplace-app/marketplace-backend/contracts/NftMarketplace.sol": {
-      "lastModificationDate": 1670595469352,
+      "lastModificationDate": 1672243051588,
       "contentHash": "b554a1fd6593711dded15b1477e65880",
       "sourceName": "contracts/NftMarketplace.sol",
       "solcConfig": {
