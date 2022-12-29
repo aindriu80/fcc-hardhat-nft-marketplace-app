@@ -11,6 +11,8 @@
         "moralis:cloud": "moralis-admin-cli watch-cloud-folder --moralisSubdomain https://c5ef-93-107-111-17.eu.ngrok.io/  --autoSave 1  --moralisCloudFolder ./cloudFunctions"
     },
     "dependencies": {
+        "@apollo/client": "^3.7.3",
+        "graphql": "^16.6.0",
         "moralis": "^1.5.11",
         "moralis-admin-cli": "^2.1.16",
         "next": "12.1.5",
